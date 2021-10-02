@@ -13,6 +13,9 @@ let package = Package(
         .package(name: "ColorCode", url: "https://github.com/1024jp/WFColorCode.git", from: "2.7.0"),
     ],
     targets: [
+        .target(name: "CodeEditor", dependencies: [
+            "CotEditor",
+        ]),
         .target(name: "CotEditor", dependencies: [
             "Yams",
             "ColorCode",
@@ -24,18 +27,7 @@ let package = Package(
         ],
         linkerSettings: [
             .linkedFramework("AppKit"),
-        ]),
-        //.testtarget(name: "coteditortests", 
-            // tests not yet working
-            //dependencies: [
-                //"CotEditor"
-            //],
-            //path: "Tests",
-            //exclude: [
-                //"Info.plist",
-                //"TestFiles"
-            //]
-        ////),
+        ])
     ]
 )
 

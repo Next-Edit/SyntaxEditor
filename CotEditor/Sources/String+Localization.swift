@@ -24,20 +24,22 @@
 //
 
 import Foundation
+import OpenGL
 
 extension String {
     
     /// Cocoa localized string
     var localized: String {
         
-        return NSLocalizedString(self, comment: "")
+        return NSLocalizedString(self, bundle: .module, comment: "")
     }
     
     
     /// returns a localized string, using the main bundle if one is not specified.
-    func localized(tableName: String? = nil, bundle: Bundle = .main, value: String = "", comment: String = "") -> String {
+    func localized(tableName: String? = nil, bundle: Bundle = .module, value: String = "", comment: String = "") -> String {
         
         return NSLocalizedString(self, tableName: tableName, bundle: bundle, value: value, comment: comment)
     }
     
 }
+
