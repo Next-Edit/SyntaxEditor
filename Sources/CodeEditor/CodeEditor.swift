@@ -1,6 +1,6 @@
 import SwiftUI
-#if !canImport(AppKit)
-import CotEditor
+#if canImport(AppKit)
+@testable import CotEditor
 #endif
 
 /// A code editor with syntax highlighting
@@ -11,8 +11,7 @@ public struct CodeEditor : View {
         #if !canImport(AppKit)
         TextEditor(text: $text) // iOS just gets the plain editor
         #else
-        #warning("TODO: integrate with CotEditor here")
-        TextEditor(text: $text)
+        EditorTextViewRepresentable(text: $text)
         #endif
     }
 }
