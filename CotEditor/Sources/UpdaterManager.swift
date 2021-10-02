@@ -25,6 +25,8 @@
 
 import Foundation
 import AppKit.NSMenuItem
+
+/*
 import Sparkle
 
 private enum AppCast {
@@ -90,3 +92,4 @@ final class UpdaterManager: NSObject, SPUUpdaterDelegate {
     }
     
 }
+*/
