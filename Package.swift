@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "CodeEditor",
     defaultLocalization: "en",
-    platforms: [ .macOS(.v11) ],
+    platforms: [ .macOS(.v11), .iOS(.v14) ],
     products: [ 
         .library(name: "CodeEditor", targets: ["CodeEditor"]),
         .executable(name: "CodeEditorDemo", targets: ["CodeEditorDemo"]),
