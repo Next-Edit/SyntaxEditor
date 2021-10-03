@@ -18,8 +18,8 @@ let package = Package(
             .target(name: "CotEditor", condition: .when(platforms: [.macOS]))
         ]),
         .target(name: "CotEditor", dependencies: [
-            "Yams",
-            "ColorCode",
+            .product(name: "Yams", package: "Yams", condition: .when(platforms: [.macOS])),
+            .product(name: "ColorCode", package: "ColorCode", condition: .when(platforms: [.macOS])),
         ],
         exclude: [
         ],
