@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "CotEditor",
+    name: "CodeEditor",
     defaultLocalization: "en",
     platforms: [ .macOS(.v11) ],
     products: [ 
