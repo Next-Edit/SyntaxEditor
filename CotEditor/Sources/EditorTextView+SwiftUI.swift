@@ -3,7 +3,7 @@ import SwiftUI
 public struct EditorTextWrapperView : View {
     @Binding var text: String
 
-    init(text: Binding<String>) {
+    public init(text: Binding<String>) {
         self._text = text
     }
 

@@ -1,6 +1,6 @@
 import SwiftUI
 #if canImport(AppKit)
-@testable import CotEditor
+import CotEditor
 #endif
 
 /// A code editor with syntax highlighting
