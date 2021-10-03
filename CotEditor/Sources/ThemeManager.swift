@@ -66,7 +66,7 @@ final class ThemeManager: SettingFileManaging {
     private init() {
         
         // cache bundled setting names
-        self.bundledSettingNames = Bundle.main.urls(forResourcesWithExtension: self.filePathExtension, subdirectory: Self.directoryName)!
+        self.bundledSettingNames = Bundle.module.urls(forResourcesWithExtension: self.filePathExtension, subdirectory: Self.directoryName)!
             .map { self.settingName(from: $0) }
             .sorted(options: [.localized, .caseInsensitive])
         
@@ -84,7 +84,7 @@ final class ThemeManager: SettingFileManaging {
         let defaultSettingName = DefaultSettings.defaults[.theme] as! String
         let forDark = self.usesDarkAppearance
         
-        return self.equivalentSettingName(to: defaultSettingName, forDark: forDark)!
+        return self.equivalentSettingName(to: defaultSettingName, forDark: forDark) ?? defaultSettingName
     }
     
     

@@ -119,8 +119,12 @@ final class EditorTextView: NSTextView, Themable, CurrentLineHighlighting, URLDe
     
     // MARK: -
     // MARK: Lifecycle
-    
-    required init?(coder: NSCoder) {
+
+    required convenience init?(coder: NSCoder) {
+        self.init(fromCoder: coder, frame: nil, textContainer: nil, layoutManager: nil)
+    }
+
+    required init?(fromCoder coder: NSCoder?, frame: NSRect?, textContainer: TextContainer?, layoutManager: LayoutManager?) {
         
         let defaults = UserDefaults.standard
         
@@ -132,8 +136,12 @@ final class EditorTextView: NSTextView, Themable, CurrentLineHighlighting, URLDe
         // set paragraph style values
         self.lineHeight = defaults[.lineHeight]
         self.tabWidth = defaults[.tabWidth]
-        
-        super.init(coder: coder)
+
+        if let coder = coder {
+            super.init(coder: coder)
+        } else {
+            super.init(frame: frame ?? .zero, textContainer: TextContainer())
+        }
         
         // workaround for: the text selection highlight can remain between lines (2017-09 macOS 10.13–10.15).
         if !UserDefaults.standard.bool(forKey: "testsRescalingInTextView") {
@@ -142,17 +150,20 @@ final class EditorTextView: NSTextView, Themable, CurrentLineHighlighting, URLDe
         }
         
         // setup layoutManager and textContainer
-        let textContainer = TextContainer()
+        let textContainer = textContainer ?? TextContainer()
         textContainer.widthTracksTextView = true
         textContainer.isHangingIndentEnabled = defaults[.enablesHangingIndent]
         textContainer.hangingIndentWidth = defaults[.hangingIndentWidth]
         self.replaceTextContainer(textContainer)
         
-        let layoutManager = LayoutManager()
+        let layoutManager = layoutManager ?? LayoutManager()
         layoutManager.allowsNonContiguousLayout = true
         layoutManager.tabWidth = self.tabWidth
         self.textContainer!.replaceLayoutManager(layoutManager)
-        
+
+        assert(self.textContainer is TextContainer)
+        assert(self.layoutManager is LayoutManager)
+
         // set layout values (wraps lines)
         self.minSize = self.frame.size
         self.maxSize = .infinite
@@ -260,6 +271,10 @@ final class EditorTextView: NSTextView, Themable, CurrentLineHighlighting, URLDe
                 .filter { !$0 }
                 .sink { [unowned self] _ in self.layoutManager?.removeTemporaryAttribute(.roundedBackgroundColor, forCharacterRange: self.string.nsRange) },
         ]
+
+        assert(self.textContainer is TextContainer)
+        assert(self.layoutManager is LayoutManager)
+
     }
     
     

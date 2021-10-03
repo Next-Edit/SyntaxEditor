@@ -31,7 +31,7 @@ final class EditorTextViewController: NSViewController, NSTextViewDelegate {
     
     // MARK: Public Properties
     
-    @IBOutlet private(set) weak var textView: EditorTextView?
+    @IBOutlet weak var textView: EditorTextView?
     
     
     // MARK: Private Properties
@@ -40,7 +40,7 @@ final class EditorTextViewController: NSViewController, NSTextViewDelegate {
     
     private var stackView: NSStackView?  { self.view as? NSStackView }
     
-    @IBOutlet private weak var lineNumberView: LineNumberView?
+    @IBOutlet weak var lineNumberView: LineNumberView?
     
     
     

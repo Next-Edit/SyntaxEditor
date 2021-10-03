@@ -45,8 +45,8 @@ final class EditorViewController: NSSplitViewController {
     
     // MARK: Private Properties
     
-    @IBOutlet private weak var navigationBarItem: NSSplitViewItem?
-    @IBOutlet private weak var textViewItem: NSSplitViewItem?
+    @IBOutlet weak var navigationBarItem: NSSplitViewItem?
+    @IBOutlet weak var textViewItem: NSSplitViewItem?
     
     
     
@@ -185,13 +185,13 @@ final class EditorViewController: NSSplitViewController {
     
     // MARK: Private Methods
     
-    private var navigationBarController: NavigationBarController? {
+    var navigationBarController: NavigationBarController? {
         
         return self.navigationBarItem?.viewController as? NavigationBarController
     }
     
     
-    private var textViewController: EditorTextViewController? {
+    var textViewController: EditorTextViewController? {
         
         return self.textViewItem?.viewController as? EditorTextViewController
     }

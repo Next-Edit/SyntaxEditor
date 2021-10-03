@@ -72,7 +72,7 @@ extension EditorTextView {
             case .comment:
                 let item = NSCustomTouchBarItem(identifier: identifier)
                 item.customizationLabel = "Comment".localized(comment: "touch bar item")
-                item.view = NSButton(image: NSImage(named: "text.commentout")!, target: self, action: #selector(toggleComment))
+                item.view = NSButton(image: NSImage(named: "text.commentout") ?? NSImage(systemSymbolName: "note.text", accessibilityDescription: "Comment out note")!, target: self, action: #selector(toggleComment))
                 return item
             
             case .textSize:

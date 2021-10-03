@@ -167,7 +167,7 @@ extension SettingFileManaging {
     /// return a setting file URL in the application's Resources domain or nil if not exists
     func urlForBundledSetting(name: String) -> URL? {
         
-        return Bundle.main.url(forResource: name, withExtension: self.filePathExtension, subdirectory: Self.directoryName)
+        return Bundle.module.url(forResource: name, withExtension: self.filePathExtension, subdirectory: Self.directoryName)
     }
     
     

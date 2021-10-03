@@ -107,7 +107,7 @@ final class LineNumberView: NSView {
     
     private var draggingInfo: DraggingInfo?
     
-    @IBOutlet private weak var textView: NSTextView? {
+    @IBOutlet weak var textView: NSTextView? {
         
         didSet {
             guard let textView = textView else { return }

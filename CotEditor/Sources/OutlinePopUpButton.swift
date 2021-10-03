@@ -43,7 +43,6 @@ final class OutlinePopUpButton: NSPopUpButton {
 }
 
 
-
 final class OutlinePopUpButtonCell: NSPopUpButtonCell {
     
     override var attributedTitle: NSAttributedString {

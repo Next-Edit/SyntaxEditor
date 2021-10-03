@@ -87,7 +87,7 @@ final class SyntaxManager: SettingFileManaging {
     private init() {
         
         // load bundled style list
-        let url = Bundle.main.url(forResource: "SyntaxMap", withExtension: "json")!
+        let url = Bundle.module.url(forResource: "SyntaxMap", withExtension: "json")!
         let data = try! Data(contentsOf: url)
         let map = try! JSONDecoder().decode([SettingName: [String: [String]]].self, from: data)
         self.bundledMap = map
