@@ -15,7 +15,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "CodeEditor", dependencies: [
-            "CotEditor",
+            .target(name: "CotEditor", condition: .when(platforms: [.macOS]))
         ]),
         .target(name: "CotEditor", dependencies: [
             "Yams",
