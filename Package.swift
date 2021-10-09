@@ -25,6 +25,8 @@ let package = Package(
         ],
         resources: [
             .process("Resources"),
+            .copy("Themes"),
+            .copy("Syntaxes"),
         ],
         linkerSettings: [
             .linkedFramework("AppKit"),
