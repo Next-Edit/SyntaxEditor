@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 public struct EditorTextWrapperView : View {
     @Binding var text: String
@@ -16,6 +17,8 @@ public struct EditorTextWrapperView : View {
 /// a public interface to `EditorTextView`.
 struct EditorTextViewRepresentable : NSViewControllerRepresentable {
     @Binding var text: String
+
+    @Environment(\.undoManager) var undoManager
 
     //typealias Controller = WindowContentViewController
     //typealias Controller = SplitViewController
@@ -62,14 +65,50 @@ struct EditorTextViewRepresentable : NSViewControllerRepresentable {
 
         precondition(splitController.splitView.ancestorShared(with: stack) != nil)
 
+        cdr.textEditingObserver = NotificationCenter.default
+            .publisher(for: NSTextStorage.didProcessEditingNotification, object: cdr.textStorage)
+            .map { $0.object as! NSTextStorage }
+            .map(\.string)
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .assign(to: \.text, on: self)
+
+        //            NotificationCenter.default.obser
+
+        //            etv.font = wip(NSFont.systemFont(ofSize: 24))
+        //            etv.backgroundColor = wip(NSColor.gray)
+        //            etv.showsInvisibles = true
+                    // etv.theme = ThemeManager.shared
+        //            let tm = ThemeManager.shared
+        //            tm.
+        //            UserDefaults.standard[.pinsThemeAppearance] = false
+        //            UserDefaults.standard[.fontName] = "Menlo"
+        //            UserDefaults.standard[.fontSize] = 0
+
+        let themeName = wip("Classic") // ThemeManager.shared.userDefaultSettingName
+        if let theme = ThemeManager.shared.setting(name: themeName) {
+            tvc.textView?.theme = theme
+        }
+
+        // tvc.undoManager = self.undoManager
+
+        let syntaxParser = SyntaxParser(textStorage: context.coordinator.textStorage)
+        syntaxParser.style = SyntaxManager.shared.setting(name: UserDefaults.standard[.syntaxStyle]) ?? SyntaxStyle()
+
         return splitController
     }
 
     func updateNSViewController(_ viewController: Controller, context: Context) {
         precondition(viewController.isViewShown == true)
-        if context.coordinator.textStorage.string != self.text {
-            context.coordinator.textStorage.replaceCharacters(in: context.coordinator.textStorage.range, with: self.text)
+        let storage = context.coordinator.textStorage
+        if storage.string != self.text {
+            storage.replaceCharacters(in: storage.range, with: self.text)
         }
+
+    }
+
+    static func dismantleNSViewController(_ nsViewController: EditorViewController, coordinator: Coordinator) {
+        coordinator.textEditingObserver = nil
     }
 
     func makeCoordinator() -> Coordinator {
@@ -82,6 +121,7 @@ struct EditorTextViewRepresentable : NSViewControllerRepresentable {
         let textStorage = NSTextStorage()
         let textContainer = TextContainer()
         let layoutManager = LayoutManager()
+        var textEditingObserver: AnyCancellable?
 
         lazy var textView: EditorTextView = {
             layoutManager.replaceTextStorage(textStorage)
@@ -107,7 +147,6 @@ struct EditorTextViewRepresentable : NSViewControllerRepresentable {
         let editorTextViewController = EditorTextViewController()
         lazy var textViewItem = NSSplitViewItem(viewController: editorTextViewController)
 
-
         lazy var textScrollView: NSScrollView = {
             let textScroller = NSScrollView()
             textScroller.hasHorizontalScroller = false
@@ -118,7 +157,7 @@ struct EditorTextViewRepresentable : NSViewControllerRepresentable {
 
         lazy var lineNumberView: LineNumberView = {
             let lnv = LineNumberView()
-            lnv.textView = self.textScrollView.documentView as! EditorTextView
+            lnv.textView = self.textScrollView.documentView as? EditorTextView
             return lnv
         }()
         
@@ -126,3 +165,6 @@ struct EditorTextViewRepresentable : NSViewControllerRepresentable {
 
 }
 
+/// Work-in-Progress marker
+@available(*, deprecated, message: "work in progress")
+internal func wip<T>(_ value: T) -> T { value }
