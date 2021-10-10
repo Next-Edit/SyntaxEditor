@@ -416,7 +416,7 @@ final class DocumentViewController: NSSplitViewController, ThemeHolder, NSTextSt
         self.document?.analyzer.invalidate()
         self.document?.incompatibleCharacterScanner.invalidate()
         self.outlineParseTask.schedule()
-        
+
         // -> Perform in the next run loop to give layoutManagers time to update their values.
         DispatchQueue.main.async { [weak self] in
             self?.invalidateSyntaxHighlight(in: editedRange)
