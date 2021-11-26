@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 @available(macOS 12.0, *)
-struct CodeEditorDemo: App {
+struct SyntaxEditorDemo: App {
     init() {
         DispatchQueue.main.async {
             NSApp.setActivationPolicy(.regular)

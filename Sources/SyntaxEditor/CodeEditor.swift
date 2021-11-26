@@ -5,7 +5,7 @@ import CotEditor
 
 /// A code editor with syntax highlighting
 @available(macOS 12.0, iOS 15.0, *)
-public struct CodeEditor : SwiftUI.View {
+public struct SyntaxEditor : SwiftUI.View {
     @SwiftUI.Binding var text: String
 
     public init(text: SwiftUI.Binding<String>) {
